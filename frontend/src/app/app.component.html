@@ -1,0 +1,171 @@
+<!-- ── Auth pages (no sidebar) ──────────────────────────── -->
+@if (isOnAuthPage()) {
+  <div class="auth-layout">
+    <router-outlet />
+  </div>
+} @else if (isAuthenticated()) {
+  <!-- ── App Shell with Sidebar ──────────────────────────── -->
+  <div class="app-shell" [class.sidebar-collapsed]="sidebarCollapsed">
+
+    <!-- ── Sidebar ──────────────────────────────────────── -->
+    <aside class="sidebar" id="app-sidebar">
+      <!-- Logo -->
+      <div class="sidebar-header">
+        <div class="logo-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="url(#logo-gradient)"/>
+            <path d="M8 10L14 7L20 10V18L14 21L8 18V10Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M14 14L20 10M14 14L8 10M14 14V21" stroke="white" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>
+            <defs>
+              <linearGradient id="logo-gradient" x1="0" y1="0" x2="28" y2="28">
+                <stop stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        @if (!sidebarCollapsed) {
+          <span class="logo-text">VideoGen</span>
+        }
+        <button
+          class="sidebar-toggle"
+          (click)="toggleSidebar()"
+          [attr.aria-label]="sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+          id="sidebar-toggle-btn"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            @if (sidebarCollapsed) {
+              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            } @else {
+              <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            }
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li>
+            <a
+              routerLink="/dashboard"
+              routerLinkActive="active"
+              class="nav-item"
+              id="nav-dashboard"
+            >
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="2" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="11" y="2" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="2" y="11" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="11" y="11" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+              @if (!sidebarCollapsed) {
+                <span>Dashboard</span>
+              }
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/generate"
+              routerLinkActive="active"
+              class="nav-item"
+              id="nav-generate"
+            >
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 7L13 10L8 13V7Z" fill="currentColor"/>
+              </svg>
+              @if (!sidebarCollapsed) {
+                <span>Generate</span>
+              }
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/history"
+              routerLinkActive="active"
+              class="nav-item"
+              id="nav-history"
+            >
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10 6V10L13 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              @if (!sidebarCollapsed) {
+                <span>History</span>
+              }
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/credits"
+              routerLinkActive="active"
+              class="nav-item"
+              id="nav-credits"
+            >
+              <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M10 6V14M7 8.5H12.5C12.5 8.5 13.5 8.5 13.5 9.75C13.5 11 12.5 11 12.5 11H7M7 11H12.5C12.5 11 13.5 11 13.5 12.25C13.5 13.5 12.5 13.5 12.5 13.5H7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              @if (!sidebarCollapsed) {
+                <span>Credits</span>
+              }
+            </a>
+          </li>
+
+          @if (isAdmin()) {
+            <li class="nav-divider"></li>
+            <li>
+              <a
+                routerLink="/admin"
+                routerLinkActive="active"
+                class="nav-item nav-item--admin"
+                id="nav-admin"
+              >
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 2L12.09 7.26L18 8.27L14 12.14L14.81 18.02L10 15.27L5.19 18.02L6 12.14L2 8.27L7.91 7.26L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+                @if (!sidebarCollapsed) {
+                  <span>Admin</span>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile" id="user-profile">
+          <div class="user-avatar">{{ userInitials() }}</div>
+          @if (!sidebarCollapsed) {
+            <div class="user-info">
+              <span class="user-name">{{ user()?.displayName }}</span>
+              <span class="user-balance">{{ user()?.creditBalance ?? 0 }} credits</span>
+            </div>
+            <button
+              class="logout-btn"
+              (click)="logout()"
+              aria-label="Logout"
+              id="logout-btn"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 2H3C2.44772 2 2 2.44772 2 3V13C2 13.5523 2.44772 14 3 14H6M11 11L14 8L11 5M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          }
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main Content ─────────────────────────────────── -->
+    <main class="main-content" id="main-content">
+      <div class="content-wrapper">
+        <router-outlet />
+      </div>
+    </main>
+  </div>
+} @else {
+  <!-- Fallback: redirect will handle this -->
+  <router-outlet />
+}

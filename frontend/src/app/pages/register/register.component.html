@@ -1,0 +1,107 @@
+<div class="auth-container animate-fade-in">
+  <div class="auth-card glass-card">
+    <!-- Logo -->
+    <div class="auth-logo">
+      <svg width="40" height="40" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="8" fill="url(#lg2)"/>
+        <path d="M8 10L14 7L20 10V18L14 21L8 18V10Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M14 14L20 10M14 14L8 10M14 14V21" stroke="white" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>
+        <defs>
+          <linearGradient id="lg2" x1="0" y1="0" x2="28" y2="28">
+            <stop stop-color="#6366f1"/>
+            <stop offset="1" stop-color="#8b5cf6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1 class="auth-title">Create account</h1>
+    <p class="auth-subtitle">Get started with VideoGen today</p>
+
+    @if (error()) {
+      <div class="auth-error" id="register-error">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7S11.87 1 8 1zm-.5 3h1v5h-1V4zm0 6h1v1h-1v-1z"/>
+        </svg>
+        <span>{{ error() }}</span>
+      </div>
+    }
+
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label class="label" for="reg-name">Display Name</label>
+        <input
+          class="input"
+          type="text"
+          id="reg-name"
+          placeholder="John Doe"
+          [(ngModel)]="displayName"
+          name="displayName"
+          autocomplete="name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="reg-email">Email</label>
+        <input
+          class="input"
+          type="email"
+          id="reg-email"
+          placeholder="you@example.com"
+          [(ngModel)]="email"
+          name="email"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="reg-password">Password</label>
+        <input
+          class="input"
+          type="password"
+          id="reg-password"
+          placeholder="••••••••"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="reg-confirm">Confirm Password</label>
+        <input
+          class="input"
+          type="password"
+          id="reg-confirm"
+          placeholder="••••••••"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <button
+        class="btn btn-primary btn-lg auth-submit"
+        type="submit"
+        [disabled]="loading()"
+        id="register-submit"
+      >
+        @if (loading()) {
+          <span class="spinner"></span>
+          Creating account...
+        } @else {
+          Create account
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/login" id="goto-login">Sign in</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Secrets
+.env
+*.env
+.env.*
+!.env.example
+
+# Build and caches
+dist/
+*/dist/
+build/
+*/build/
+.angular/
+*/.angular/
+
+# Media & Videos
+uploads/
+*/uploads/
+*.mp4
+*.log
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

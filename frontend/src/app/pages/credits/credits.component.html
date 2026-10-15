@@ -1,0 +1,103 @@
+<div class="credits-page animate-fade-in">
+  <!-- ── Balance Banner ───────────────────────────────────── -->
+  <div class="balance-banner glass-card">
+    <div class="banner-content">
+      <div class="balance-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 7V17M8 10.5H16C16 10.5 17.5 10.5 17.5 12C17.5 13.5 16 13.5 16 13.5H8M8 13.5H16C16 13.5 17.5 13.5 17.5 15C17.5 16.5 16 16.5 16 16.5H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="balance-info">
+        <span class="balance-label">Available Balance</span>
+        <h2 class="balance-amount">{{ userBalance() }} <span class="balance-currency">credits</span></h2>
+      </div>
+    </div>
+  </div>
+
+  <header class="page-header">
+    <h1 class="page-title">Buy Credits</h1>
+    <p class="page-desc">Top up your balance to generate more videos. 1 credit = 1 minute of basic voice generation.</p>
+  </header>
+
+  @if (error()) {
+    <div class="alert-error">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7S11.87 1 8 1zm-.5 3h1v5h-1V4zm0 6h1v1h-1v-1z"/>
+      </svg>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  <!-- ── Pricing Grid ─────────────────────────────────────── -->
+  @if (loadingPackages()) {
+    <div class="pricing-grid">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="pricing-card skeleton-card glass-card">
+          <div class="skeleton" style="width: 50%; height: 24px; margin-bottom: 16px;"></div>
+          <div class="skeleton" style="width: 80%; height: 48px; margin-bottom: 32px;"></div>
+          <div class="skeleton" style="width: 100%; height: 44px; border-radius: 8px;"></div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="pricing-grid">
+      @for (pkg of packages(); track pkg.id; let i = $index) {
+        <div class="pricing-card glass-card" [class.pricing-card-featured]="i === 1">
+          @if (i === 1) {
+            <div class="featured-badge">Most Popular</div>
+          }
+          
+          <div class="card-top">
+            <h3 class="package-name">{{ pkg.name }}</h3>
+            <div class="package-credits">
+              <span class="credit-count">{{ pkg.credits }}</span>
+              <span class="credit-label">credits</span>
+            </div>
+            <div class="package-price">
+              <span class="price-symbol">$</span>
+              <span class="price-value">{{ pkg.priceUsd }}</span>
+            </div>
+          </div>
+          
+          <div class="card-features">
+            <ul class="feature-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M13.3333 4L6 11.3333L2.66667 8" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ~{{ pkg.credits }} basic video minutes
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M13.3333 4L6 11.3333L2.66667 8" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ~{{ pkg.credits / 6 | number:'1.0-0' }} premium video minutes
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M13.3333 4L6 11.3333L2.66667 8" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Credits never expire
+              </li>
+            </ul>
+          </div>
+
+          <button 
+            class="btn btn-lg purchase-btn" 
+            [class.btn-primary]="i === 1"
+            [class.btn-secondary]="i !== 1"
+            (click)="purchasePackage(pkg)"
+            [disabled]="purchasing() !== null"
+          >
+            @if (purchasing() === pkg.id) {
+              <span class="spinner"></span> Purchasing...
+            } @else {
+              Buy Now
+            }
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

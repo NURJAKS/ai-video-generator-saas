@@ -1,0 +1,81 @@
+<div class="auth-container animate-fade-in">
+  <div class="auth-card glass-card">
+    <!-- Logo -->
+    <div class="auth-logo">
+      <svg width="40" height="40" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+        <path d="M8 10L14 7L20 10V18L14 21L8 18V10Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M14 14L20 10M14 14L8 10M14 14V21" stroke="white" stroke-width="1.5" stroke-linejoin="round" opacity="0.6"/>
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="28" y2="28">
+            <stop stop-color="#6366f1"/>
+            <stop offset="1" stop-color="#8b5cf6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1 class="auth-title">Welcome back</h1>
+    <p class="auth-subtitle">Sign in to your VideoGen account</p>
+
+    <!-- Error message -->
+    @if (error()) {
+      <div class="auth-error" id="login-error">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7S11.87 1 8 1zm-.5 3h1v5h-1V4zm0 6h1v1h-1v-1z"/>
+        </svg>
+        <span>{{ error() }}</span>
+      </div>
+    }
+
+    <!-- Form -->
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label class="label" for="login-email">Email</label>
+        <input
+          class="input"
+          type="email"
+          id="login-email"
+          placeholder="you@example.com"
+          [(ngModel)]="email"
+          name="email"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="login-password">Password</label>
+        <input
+          class="input"
+          type="password"
+          id="login-password"
+          placeholder="••••••••"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <button
+        class="btn btn-primary btn-lg auth-submit"
+        type="submit"
+        [disabled]="loading()"
+        id="login-submit"
+      >
+        @if (loading()) {
+          <span class="spinner"></span>
+          Signing in...
+        } @else {
+          Sign in
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Don't have an account?
+      <a routerLink="/register" id="goto-register">Create one</a>
+    </p>
+  </div>
+</div>
