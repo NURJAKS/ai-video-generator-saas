@@ -2,6 +2,7 @@
 
 > **Scalable, event-driven AI Video Generation SaaS platform architected with a NestJS modular core, distributed BullMQ worker pipeline, multi-vendor AI orchestration (OpenAI, ElevenLabs, Fal.ai), FFmpeg media composition, real-time WebSocket telemetry, and an Angular 19 reactive presentation layer.**
 
+[![CI Pipeline](https://github.com/NURJAKS/ai-video-generator-saas/actions/workflows/ci.yml/badge.svg)](https://github.com/NURJAKS/ai-video-generator-saas/actions/workflows/ci.yml)
 [![NestJS](https://img.shields.io/badge/NestJS-11.0+-E0234E?logo=nestjs&logoColor=white)](https://nestjs.com/)
 [![Angular](https://img.shields.io/badge/Angular-19.2+-DD0031?logo=angular&logoColor=white)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
